@@ -1,0 +1,9 @@
+<h1>{{ user | json }}</h1>
+<header class="header">
+  <div class="header__wrapper">
+    <img class="header__logo" src="" alt="" />
+    <div class="header__user-info" *ngIf="user?.authenticated">
+      <span (click)="logoutUser()">Logout</span>
+    </div>
+  </div>
+</header>
