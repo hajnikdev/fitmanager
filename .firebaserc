@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "fitmanager-7d167"
+  },
+  "targets": {
+    "fitmanager-7d167": {
+      "hosting": {
+        "fitmanager": [
+          "fitmanager-7d167"
+        ]
+      }
+    }
   }
 }
