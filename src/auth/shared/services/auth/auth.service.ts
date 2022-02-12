@@ -2,6 +2,12 @@ import { Injectable } from '@angular/core';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 
+export interface User {
+  email: string;
+  uid: string;
+  authenticated: boolean;
+}
+
 @Injectable()
 export class AuthService {
   constructor(private angularFire: AngularFireAuth) {}
