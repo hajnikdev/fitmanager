@@ -5,12 +5,12 @@ import { distinctUntilChanged, pluck } from 'rxjs/operators';
 import { User } from './auth/shared/services/auth/auth.service';
 
 export interface State {
-  user?: User;
+  user: User | null;
   [key: string]: any;
 }
 
 const state: State = {
-  user: undefined,
+  user: null,
 };
 
 export class Store {
