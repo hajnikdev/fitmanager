@@ -7,16 +7,12 @@ import { AppComponent } from './app.component';
 // Feature modules
 import { AuthModule } from 'src/auth/auth.module';
 
+import { Store } from 'store';
+
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    AuthModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+  declarations: [AppComponent],
+  imports: [BrowserModule, AppRoutingModule, AuthModule],
+  providers: [Store],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
