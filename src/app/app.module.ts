@@ -6,6 +6,7 @@ import { AppComponent } from './containers/app/app.component';
 
 // Feature modules
 import { AuthModule } from 'src/auth/auth.module';
+import { HealthModule } from 'src/health/health.module';
 
 // Store
 import { Store } from 'store';
@@ -16,7 +17,7 @@ import { AppNavComponent } from './components/app-nav/app-nav.component';
 
 @NgModule({
   declarations: [AppComponent, AppHeaderComponent, AppNavComponent],
-  imports: [BrowserModule, AppRoutingModule, AuthModule],
+  imports: [BrowserModule, AppRoutingModule, AuthModule, HealthModule],
   providers: [Store],
   bootstrap: [AppComponent],
 })
