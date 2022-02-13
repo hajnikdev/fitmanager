@@ -1,16 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { AngularFireDatabase } from '@angular/fire/database';
+import {
+  AngularFireDatabase,
+  AngularFireList,
+  SnapshotAction,
+} from '@angular/fire/database';
 
 import { Store } from 'store';
 import { AuthService, User } from 'src/auth/shared/services/auth/auth.service';
 
 export interface Meal {
-  name: string;
+  name: string | null;
   ingredients: string[];
-  timestamp: number;
-  $key: string;
+  timestamp: number | null;
+  $key: string | null;
   $exists: () => boolean;
 }
 
@@ -20,12 +24,22 @@ export class MealsService {
     .list<Meal[]>(`meals/${this.authService.uid}`)
     .snapshotChanges()
     .pipe(
-      tap((next: any[]) =>
-        this.store.set(
-          'meals',
-          next?.map((value) => value?.payload)
-        )
-      )
+      map((snapshot: SnapshotAction<Meal[]>[]) => {
+        const meals: Meal[] = snapshot.map((value: SnapshotAction<Meal[]>) => {
+          const data = value.payload.val() as Meal | null;
+          return {
+            name: data?.name ?? null,
+            ingredients: data?.ingredients ?? [],
+            timestamp: null,
+            $key: value.key,
+            $exists: value.payload.exists,
+          };
+        });
+
+        console.log(meals);
+        this.store.set('meals', meals);
+        return meals;
+      })
     );
 
   constructor(
@@ -35,11 +49,10 @@ export class MealsService {
   ) {}
 
   async addMeal(meal: Meal) {
-    const user = await this.authService.currentUser;
-    console.log('User uid: ', user?.uid);
-    if (user) {
-      return this.database.list(`meals/${user?.uid}`).push(meal);
-    }
-    throw new Error('Unauthenticated user!');
+    return this.database.list(`meals/${this.authService.uid}`).push(meal);
+  }
+
+  async removeMeal(key: any) {
+    return this.database.list(`meals/${this.authService.uid}`).remove(key);
   }
 }
