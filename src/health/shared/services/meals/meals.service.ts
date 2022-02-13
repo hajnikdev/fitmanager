@@ -19,7 +19,14 @@ export class MealsService {
   meals$: Observable<Meal[]> | null = this.database
     .list<Meal[]>(`meals/${this.authService.uid}`)
     .snapshotChanges()
-    .pipe(tap((next: any[]) => this.store.set('meals', next)));
+    .pipe(
+      tap((next: any[]) =>
+        this.store.set(
+          'meals',
+          next?.map((value) => value?.payload)
+        )
+      )
+    );
 
   constructor(
     private store: Store,

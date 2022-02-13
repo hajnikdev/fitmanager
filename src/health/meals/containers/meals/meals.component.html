@@ -8,7 +8,7 @@
   </div>
   <ng-container *ngIf="meals$ | async as meals; else loading">
     <ng-container *ngIf="meals.length; else noMeals">
-      {{ meals | json }}
+      <app-list-item *ngFor="let meal of meals" [item]="meal"></app-list-item>
     </ng-container>
     <ng-template #noMeals>
       <div class="message">No meals, add a new meal to start</div>
