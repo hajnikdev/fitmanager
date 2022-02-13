@@ -1,1 +1,10 @@
-<div class="meal">I am a meal!</div>
+<div class="meal">
+  <div class="meal__title">
+    <h1>
+      <span>Create meal</span>
+    </h1>
+  </div>
+  <div>
+    <app-meal-form (create)="addMeal($event)"></app-meal-form>
+  </div>
+</div>
