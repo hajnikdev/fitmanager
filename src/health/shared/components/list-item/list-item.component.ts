@@ -1,8 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
 } from '@angular/core';
 
 @Component({
@@ -14,6 +16,7 @@ import {
 export class ListItemComponent implements OnInit {
   @Input() item: any;
 
+  @Output() remove = new EventEmitter<any>()
   toggled: boolean = false;
 
   constructor() {}
@@ -29,5 +32,7 @@ export class ListItemComponent implements OnInit {
     this.toggled = !this.toggled;
   }
 
-  removeItem() {}
+  removeItem(item: any) {
+    this.remove.emit(item)
+  }
 }

@@ -49,11 +49,10 @@ export class MealsService {
   ) {}
 
   async addMeal(meal: Meal) {
-    const user = await this.authService.currentUser;
-    console.log('User uid: ', user?.uid);
-    if (user) {
-      return this.database.list(`meals/${user?.uid}`).push(meal);
-    }
-    throw new Error('Unauthenticated user!');
+    return this.database.list(`meals/${this.authService.uid}`).push(meal);
+  }
+
+  async removeMeal(key: any) {
+    return this.database.list(`meals/${this.authService.uid}`).remove(key);
   }
 }
