@@ -7,7 +7,9 @@
     <a class="meals__btn" [routerLink]="['../meals/new']"> + New meal </a>
   </div>
   <ng-container *ngIf="meals$ | async as meals; else loading">
-    <ng-container *ngIf="meals.length; else noMeals"> </ng-container>
+    <ng-container *ngIf="meals.length; else noMeals">
+      {{ meals | json }}
+    </ng-container>
     <ng-template #noMeals>
       <div class="message">No meals, add a new meal to start</div>
     </ng-template>

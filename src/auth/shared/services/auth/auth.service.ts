@@ -13,12 +13,14 @@ export interface User {
 
 @Injectable()
 export class AuthService {
+  private _uid: string | null = null;
   auth$ = this.angularFire.authState.pipe(
     tap((next) => {
       if (!next) {
         this.store.set('user', null);
         return;
       }
+      this.uid = next.uid;
       const user: User = {
         email: next.email,
         uid: next.uid,
@@ -31,6 +33,18 @@ export class AuthService {
 
   get authState() {
     return this.angularFire.authState;
+  }
+
+  get currentUser() {
+    return this.angularFire.currentUser;
+  }
+
+  get uid(): string | null {
+    return this._uid;
+  }
+
+  set uid(value: string | null) {
+    this._uid = value;
   }
 
   createUser(email: string, password: string) {
