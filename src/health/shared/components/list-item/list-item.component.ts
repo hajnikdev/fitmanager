@@ -24,7 +24,6 @@ export class ListItemComponent implements OnInit {
   ngOnInit(): void {}
 
   getRoute(item: any) {
-    console.log(item);
     return [`../meals`, item.$key];
   }
 

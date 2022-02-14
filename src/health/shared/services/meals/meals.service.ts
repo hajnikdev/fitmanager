@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { filter, map, tap } from 'rxjs/operators';
 import {
   AngularFireDatabase,
   AngularFireList,
@@ -36,7 +36,6 @@ export class MealsService {
           };
         });
 
-        console.log(meals);
         this.store.set('meals', meals);
         return meals;
       })
@@ -48,6 +47,15 @@ export class MealsService {
     private authService: AuthService
   ) {}
 
+  getMeal(key: string): Observable<{} | Meal | undefined> {
+    if (!key) return of({});
+    return this.store.select<Meal[]>('meals').pipe(
+      filter((meals) => !!meals),
+      map((meals: Meal[]) => {
+        return meals.find((meal) => meal.$key === key);
+      })
+    );
+  }
   async addMeal(meal: Meal) {
     return this.database.list(`meals/${this.authService.uid}`).push(meal);
   }

@@ -1,7 +1,10 @@
 <div class="meal">
   <div class="meal__title">
     <h1>
-      <span>Create meal</span>
+      <span *ngIf="meal$ | async as meal; else loading">
+        {{ meal?.hasOwnProperty("name") ? "Edit" : "Create" }} meal
+      </span>
+      <ng-template #loading> Loading... </ng-template>
     </h1>
   </div>
   <div>

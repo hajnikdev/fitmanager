@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 import {
   Meal,
@@ -11,10 +13,28 @@ import {
   templateUrl: './meal.component.html',
   styleUrls: ['./meal.component.scss'],
 })
-export class MealComponent implements OnInit {
-  constructor(private mealsService: MealsService, private router: Router) {}
+export class MealComponent implements OnInit, OnDestroy {
+  meal$?: Observable<Meal | {} | undefined>;
+  subscrition?: Subscription;
 
-  ngOnInit(): void {}
+  constructor(
+    private mealsService: MealsService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    this.subscrition = this.mealsService.meals$?.subscribe();
+    this.meal$ = this.route.params.pipe(
+      switchMap((param) => {
+        return this.mealsService.getMeal(param.id);
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscrition?.unsubscribe();
+  }
 
   async addMeal(event: Meal) {
     try {
