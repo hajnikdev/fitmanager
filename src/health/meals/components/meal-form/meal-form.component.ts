@@ -2,8 +2,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import {
   FormArray,
@@ -21,15 +24,21 @@ import { Meal } from 'src/health/shared/services/meals/meals.service';
   styleUrls: ['./meal-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MealFormComponent implements OnInit {
+export class MealFormComponent implements OnInit, OnChanges {
+  @Input() meal: {} | Meal | null = null;
   @Output() create = new EventEmitter<Meal>();
+  @Output() update = new EventEmitter<Meal>();
+  @Output() delete = new EventEmitter<Meal>();
 
   form = this.formBuilder.group({
     name: ['', Validators.required],
     ingredients: this.formBuilder.array(['']),
   });
-  constructor(private formBuilder: FormBuilder) {}
 
+  toggled: boolean = false;
+  exists: boolean = false;
+
+  constructor(private formBuilder: FormBuilder) {}
   get required() {
     return (
       this.form.get('name')?.hasError('required') &&
@@ -43,10 +52,51 @@ export class MealFormComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.meal.currentValue.name) {
+      this.exists = true;
+
+      const value = this.meal;
+      this.form.patchValue(value as { [key: string]: any });
+
+      this.emptyIngredients();
+
+      if (
+        value &&
+        value?.hasOwnProperty('ingredients') &&
+        (value as Meal)?.ingredients
+      ) {
+        for (const item of (value as Meal)?.ingredients) {
+          this.ingredients.push(new FormControl(item));
+        }
+      }
+    }
+  }
+
+  emptyIngredients() {
+    while (this.ingredients.controls.length) {
+      this.ingredients.removeAt(0);
+    }
+  }
+
+  toggle() {
+    this.toggled = !this.toggled;
+  }
+
   createMeal() {
     if (this.form.valid) {
       this.create.emit(this.form.value);
     }
+  }
+
+  updateMeal() {
+    if (this.form.valid) {
+      this.update.emit(this.form.value);
+    }
+  }
+
+  removeMeal() {
+    this.delete.emit(this.form.value);
   }
 
   addIngredient() {

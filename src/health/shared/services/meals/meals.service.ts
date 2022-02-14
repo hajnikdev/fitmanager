@@ -56,11 +56,18 @@ export class MealsService {
       })
     );
   }
-  async addMeal(meal: Meal) {
+
+  addMeal(meal: Meal) {
     return this.database.list(`meals/${this.authService.uid}`).push(meal);
   }
 
-  async removeMeal(key: any) {
+  updateMeal(key: any, meal: Meal) {
+    return this.database
+      .object(`meals/${this.authService.uid}/${key}`)
+      .update(meal);
+  }
+
+  removeMeal(key: any) {
     return this.database.list(`meals/${this.authService.uid}`).remove(key);
   }
 }

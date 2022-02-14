@@ -1,13 +1,21 @@
 <div class="meal">
   <div class="meal__title">
     <h1>
-      <span *ngIf="meal$ | async as meal; else loading">
+      <span *ngIf="meal$ | async as meal; else loadingTitle">
         {{ meal?.hasOwnProperty("name") ? "Edit" : "Create" }} meal
       </span>
-      <ng-template #loading> Loading... </ng-template>
+      <ng-template #loadingTitle> Loading... </ng-template>
     </h1>
   </div>
-  <div>
-    <app-meal-form (create)="addMeal($event)"></app-meal-form>
+  <div *ngIf="meal$ | async as meal; else loadingMeal">
+    <app-meal-form
+      [meal]="meal"
+      (create)="addMeal($event)"
+      (update)="updateMeal($event)"
+      (delete)="deleteMeal($event)"
+    ></app-meal-form>
   </div>
+  <ng-template #loadingMeal>
+    <div class="message">Fetching meal...</div>
+  </ng-template>
 </div>
