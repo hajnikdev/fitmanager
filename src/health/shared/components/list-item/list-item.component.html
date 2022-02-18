@@ -4,9 +4,12 @@
       {{ item?.name }}
     </p>
     <p class="list-item__ingredients">
-      <span>
+      <span *ngIf="item.ingredients; else showWorkout">
         {{ item?.ingredients }}
       </span>
+      <ng-template #showWorkout>
+        {{ item | workout}}
+      </ng-template>
     </p>
   </a>
   <div class="list-item__delete" *ngIf="toggled">

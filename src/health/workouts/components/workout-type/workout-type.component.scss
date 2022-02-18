@@ -1,0 +1,7 @@
+.workout-type {
+  &__pane {
+    &.active {
+      text-decoration: underline;
+    }
+  }
+}

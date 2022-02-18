@@ -1,0 +1,21 @@
+<div class="workout">
+  <div class="workout__title">
+    <h1>
+      <span *ngIf="workout$ | async as workout; else loadingTitle">
+        {{ workout?.hasOwnProperty("name") ? "Edit" : "Create" }} workout
+      </span>
+      <ng-template #loadingTitle> Loading... </ng-template>
+    </h1>
+  </div>
+  <div *ngIf="workout$ | async as workout; else loadingWorkout">
+    <app-workout-form
+      [workout]="workout"
+      (create)="addWorkout($event)"
+      (update)="updateWorkout($event)"
+      (delete)="deleteWorkout($event)"
+    ></app-workout-form>
+  </div>
+  <ng-template #loadingWorkout>
+    <div class="message">Fetching workout...</div>
+  </ng-template>
+</div>
