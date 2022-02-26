@@ -1,0 +1,9 @@
+<div class="controls">
+  <button type="button" (click)="moveDate(offset - 1)">
+    <span>previous</span>
+  </button>
+  <p>{{ selected | date: "yMMMMd" }}</p>
+  <button type="button" (click)="moveDate(offset + 1)">
+    <span>next</span>
+  </button>
+</div>

@@ -12,6 +12,7 @@ import { Workout } from './health/shared/services/workouts/workouts.service';
 export interface State {
   user: User | null;
   meals: Meal[];
+  date: Date | null,
   workouts: Workout[];
   [key: string]: any;
 }
@@ -19,6 +20,7 @@ export interface State {
 const state: State = {
   user: null,
   meals: [],
+  date: null,
   workouts: []
 };
 
