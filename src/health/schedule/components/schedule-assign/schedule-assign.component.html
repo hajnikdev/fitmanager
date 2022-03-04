@@ -1,0 +1,36 @@
+<div class="schedule-assign">
+  <div class="schedule-assign__modal">
+    <div class="schedule-assign__title">
+      <h1>Assign {{ section?.type }}</h1>
+      <a class="btn__add" [routerLink]="getRoute(section.type)">
+        New {{ section?.type }}
+      </a>
+    </div>
+    <div class="schedule-assign__list">
+      <span class="schedule-assign__empty" *ngIf="!list?.length">
+        Nothing here to assign!
+      </span>
+      <ng-container *ngIf="list?.length">
+        <div
+          *ngFor="let item of list"
+          [class.active]="exists(item.name)"
+          (click)="toggleItem(item.name)"
+        >
+          <span *ngIf="exists(item.name)">selected</span>
+          {{ item.name }}
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="schedule-assign__submit">
+      <div>
+        <button type="button" class="button" (click)="updateAssign()">
+          Update
+        </button>
+        <button type="button" class="button--cancel" (click)="cancelAssign()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
