@@ -10,21 +10,24 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
         <ng-content select="h1"></ng-content>
 
         <label>
+          <span>Email</span>
           <input
             type="email"
-            placeholder="Email address"
+            placeholder="Emailová adresa"
             formControlName="email"
           />
         </label>
-        <div class="error" *ngIf="emailFormat">Invalid email format</div>
+        <div class="error" *ngIf="!emailInvalid && emailFormat">Nesprávny formát emailovej adresy</div>
+        <div class="error" *ngIf="emailInvalid">Je potrebné zadať email</div>
         <label>
+          <span>Heslo</span>
           <input
             type="password"
-            placeholder="Enter password"
+            placeholder="Zadajte heslo"
             formControlName="password"
           />
         </label>
-        <div class="error" *ngIf="passwordInvalid">Password is required</div>
+        <div class="error" *ngIf="passwordInvalid">Je potrebné zadať heslo</div>
 
         <ng-content select=".error"></ng-content>
         <div class="auth-form__action">
@@ -41,7 +44,7 @@ export class AuthFormComponent {
   @Output() submitted = new EventEmitter<FormGroup>();
 
   form = this.formBuilder.group({
-    email: ['', Validators.email],
+    email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
   });
 
@@ -55,6 +58,11 @@ export class AuthFormComponent {
 
   get passwordInvalid() {
     const control = this.form.get('password');
+    return control?.hasError('required') && control.touched;
+  }
+
+  get emailInvalid() {
+    const control = this.form.get('email');
     return control?.hasError('required') && control.touched;
   }
 

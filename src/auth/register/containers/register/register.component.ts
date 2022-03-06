@@ -6,13 +6,13 @@ import { AuthService } from '../../../shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-register',
-  styleUrls: ['./register.component.scss'],
+  styleUrls: ['../../../shared/styles/login-register.scss', './register.component.scss'],
   template: `
-    <div>
+    <div class="login-register-wrapper">
       <app-form (submitted)="registerUser($event)">
-        <h1>Register</h1>
-        <a routerLink="/auth/login">Already have an account?</a>
-        <button type="submit">Register</button>
+        <h1>Registrácia</h1>
+        <a routerLink="/auth/login">Chcete sa prihlásiť?</a>
+        <button type="submit">Registrovať</button>
         <div class="error" *ngIf="error">{{ error }}</div>
       </app-form>
     </div>
@@ -28,7 +28,7 @@ export class RegisterComponent {
     try {
       await this.authService.createUser(email, password);
       this.router.navigate(['/']);
-    } catch (error) {
+    } catch (error: any) {
       this.error = error.message;
     }
   }

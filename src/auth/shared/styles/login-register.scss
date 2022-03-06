@@ -1,0 +1,35 @@
+.login-register-wrapper {
+  position: relative;
+  width: calc(100% - 1rem);
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+  z-index: 0;
+  overflow: hidden;
+  transition: min-width 0.5s ease-out;
+
+  @media screen and (min-width: 480px) {
+    width: calc(100% - 3rem);
+    min-width: 400px;
+    padding: 2rem;
+    margin: 1.5rem;
+    transition: min-width 0.5s ease-in;
+  }
+
+  &::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(55, 6, 14, 0.6);
+    backdrop-filter: blur(0.15rem);
+    z-index: -1;
+    box-shadow: inset -0.2rem 0.5rem 1.5rem -0.5rem #ffffff4d,
+      inset 0.5rem -0.3rem 1rem 0rem #00000033;
+  }
+}
