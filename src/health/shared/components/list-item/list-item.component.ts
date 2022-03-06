@@ -16,7 +16,7 @@ import {
 export class ListItemComponent implements OnInit {
   @Input() item: any;
 
-  @Output() remove = new EventEmitter<any>()
+  @Output() remove = new EventEmitter<any>();
   toggled: boolean = false;
 
   constructor() {}
@@ -24,7 +24,7 @@ export class ListItemComponent implements OnInit {
   ngOnInit(): void {}
 
   getRoute(item: any) {
-    return [`../meals`, item.$key];
+    return [`../${item?.ingredients ? 'meals' : 'workouts'}`, item.$key];
   }
 
   toggle() {
@@ -32,6 +32,6 @@ export class ListItemComponent implements OnInit {
   }
 
   removeItem(item: any) {
-    this.remove.emit(item)
+    this.remove.emit(item);
   }
 }
