@@ -1,23 +1,29 @@
-<nav class="navigation">
+<nav class="navigation" [ngClass]="{ shown: menuVisibility }">
+  <div class="navigation__close" (click)="toggleNavigationMenu()"></div>
+
   <a
     class="navigation__link"
     routerLink="schedule"
     routerLinkActive="navigation__link--active"
   >
-    Schedule
+    Stravovací a cvičebný plán
   </a>
   <a
     class="navigation__link"
     routerLink="meals"
     routerLinkActive="navigation__link--active"
   >
-    Meals
+    Jedlá
   </a>
   <a
     class="navigation__link"
     routerLink="workouts"
-    routerLinkActive="navigation__link--activee"
+    routerLinkActive="navigation__link--active"
   >
-    Workouts
+    Cvičenia
+  </a>
+  <span style="flex: 1"></span>
+  <a class="navigation__link navigation__link--logout" (click)="logoutUser()">
+    Odhlásiť
   </a>
 </nav>

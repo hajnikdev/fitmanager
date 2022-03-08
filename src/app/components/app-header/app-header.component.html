@@ -1,8 +1,16 @@
-<header class="header">
+<header class="header" *ngIf="user?.authenticated">
   <div class="header__wrapper">
-    <img class="header__logo" src="" alt="" />
-    <div class="header__user-info" *ngIf="user?.authenticated">
-      <span (click)="logoutUser()">Logout</span>
+    <a
+
+      routerLink="/"
+    >
+      <img src="assets/images/logo-min.png" alt="befit" class="header__logo"/>
+    </a>
+
+    <div class="header__user-info">
+      <div class="header__menu" (click)="toggleNavigationMenu()">
+        <span></span><span></span><span></span>
+      </div>
     </div>
   </div>
 </header>

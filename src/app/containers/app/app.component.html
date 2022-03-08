@@ -1,5 +1,10 @@
 <div class="wrapper">
-  <app-header [user]="user$ | async" (logout)="onLogout()"></app-header>
-  <app-nav *ngIf="(user$ | async)?.authenticated"></app-nav>
+  <app-header [user]="user$ | async" (toggleMenu)="onMenuToggle()"></app-header>
+  <app-nav
+    *ngIf="(user$ | async)?.authenticated"
+    [menuVisibility]="menuVisibility"
+    (logout)="onLogout()"
+    (toggleMenu)="onMenuToggle()"
+  ></app-nav>
   <router-outlet></router-outlet>
 </div>

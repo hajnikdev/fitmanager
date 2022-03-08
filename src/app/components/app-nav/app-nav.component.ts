@@ -1,4 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Output,
+  EventEmitter,
+  Input,
+} from '@angular/core';
 
 @Component({
   selector: 'app-nav',
@@ -6,8 +12,16 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./app-nav.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppNavComponent implements OnInit {
-  constructor() {}
+export class AppNavComponent {
+  @Input() menuVisibility: boolean = false;
+  @Output() logout = new EventEmitter<any>();
+  @Output() toggleMenu = new EventEmitter<any>();
 
-  ngOnInit(): void {}
+  toggleNavigationMenu() {
+    this.toggleMenu.emit();
+  }
+
+  logoutUser() {
+    this.logout.emit();
+  }
 }

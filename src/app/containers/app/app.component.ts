@@ -14,6 +14,8 @@ export class AppComponent implements OnInit, OnDestroy {
   user$?: Observable<User>;
   subscription?: Subscription;
 
+  menuVisibility: boolean = false;
+
   constructor(
     private store: Store,
     private authService: AuthService,
@@ -32,5 +34,9 @@ export class AppComponent implements OnInit, OnDestroy {
   async onLogout() {
     await this.authService.logoutUser();
     this.router.navigate(['/auth/login']);
+  }
+
+  onMenuToggle() {
+    this.menuVisibility = !this.menuVisibility
   }
 }

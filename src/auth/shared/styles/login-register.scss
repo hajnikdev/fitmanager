@@ -1,7 +1,7 @@
 .login-register-wrapper {
   position: relative;
   width: calc(100% - 1rem);
-  min-width: 0;
+  max-width: none;
   display: flex;
   justify-content: center;
   padding: 1rem;
@@ -9,11 +9,11 @@
   border-radius: 0.5rem;
   z-index: 0;
   overflow: hidden;
-  transition: min-width 0.5s ease-out;
+  transition: max-width 0.5s ease-out;
 
   @media screen and (min-width: 480px) {
     width: calc(100% - 3rem);
-    min-width: 400px;
+    max-width: 400px;
     padding: 2rem;
     margin: 1.5rem;
     transition: min-width 0.5s ease-in;

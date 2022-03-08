@@ -17,13 +17,13 @@ import { User } from 'src/auth/shared/services/auth/auth.service';
 })
 export class AppHeaderComponent implements OnInit {
   @Input() user: User | null = null;
-  @Output() logout = new EventEmitter<any>();
+  @Output() toggleMenu = new EventEmitter<any>();
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  logoutUser() {
-    this.logout.emit();
+  toggleNavigationMenu() {
+    this.toggleMenu.emit();
   }
 }
