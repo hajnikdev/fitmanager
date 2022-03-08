@@ -11,4 +11,11 @@
     #00020266 left center / cover fixed;
     background-blend-mode: overlay;
   }
+
+  main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+  }
 }
